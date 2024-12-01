@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>F1 outline text</title>
+</head>
+<body>
+    <svg viewBox="0 0 400 100">
+        <defs>
+  <!-- 			Based on: https://stackoverflow.com/questions/13069446/simple-fill-pattern-in-svg-diagonal-hatching -->
+              <pattern id="diagonalHatch" patternUnits="userSpaceOnUse">
+  </pattern>
+  
+    </defs>
+  
+          <mask id="myMask">
+              <rect width=100% height=100% fill="url(#diagonalHatch)" />
+          </mask>
+  
+      <filter id="outline">    
+          <!-- 	FROM https://tympanus.net/codrops/2019/01/22/svg-filter-effects-outline-text-with-femorphology/ -->
+          <feMorphology operator="dilate" in="SourceAlpha" result="THICKNESS" />
+          <feComposite operator="out" in="THICKNESS" in2="SourceGraphic" result="MAIN_EFFECT">
+          </feComposite>
+          
+          <feFlood flood-color="#F00" flood-opacity="1" result="PINK"></feFlood>
+      <feComposite in="PINK" in2="MAIN_EFFECT" operator="in" result="OUTLINE"></feComposite>
+          
+      </filter>
+      
+      <g filter="url(#outline)" >
+          <g mask="url(#myMask)" >
+              <text x=50% y=50% dominant-baseline="middle" text-anchor="middle" style="font-size: 60px;"></text>
+          </g>
+      </g>
+  </svg>
+  
+  <div class="controls">
+      <label>
+          Edit Text
+          <input placeholder="Type here to change text" id=text />
+      </label>
+      <label>
+          Edit Size
+          <input type="number" id=size />
+      </label>
+      <label>
+          Edit Outline Thickness
+          <input type="number" id=thickness step=".1"/>
+      </label>
+  </div>
+    <script src="./main.js"></script>
+</body>
+</html>
